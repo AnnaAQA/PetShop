@@ -113,7 +113,7 @@ class TestPet:
         with allure.step("Проверка статуса ответа"):
             assert response.status_code == 200, "Код ответа не совпал с ожидаемым"
 
-        with allure.step("Проверка статуса ответа"):
+        with allure.step("Проверка соответствия ID питомца"):
             assert response.json()['id'] == pet_id
 
     @allure.title("Обновление информации о питомце")
@@ -147,7 +147,7 @@ class TestPet:
         with allure.step("Проверка статуса ответа"):
             assert response.status_code == 200, "Код ответа не совпал с ожидаемым"
 
-        with allure.step("Отправка запроса на несуществующего питомца "):
+        with allure.step("Попытка получить удалённого питомца"):
             response = requests.get(url=f"{BASE_URL}/pet/{pet_id}")
 
         with allure.step("Проверка статуса ответа по удаленному питомцу"):
