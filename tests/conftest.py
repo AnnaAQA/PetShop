@@ -3,6 +3,7 @@ import requests
 
 BASE_URL = "http://5.181.109.28:9090/api/v3"
 
+
 @pytest.fixture()
 def create_pet():
     payload = {
@@ -16,3 +17,16 @@ def create_pet():
     return response.json()
 
 
+@pytest.fixture()
+def create_store():
+    payload = {
+        "id": 1,
+        "petId": 1,
+        "quantity": 1,
+        "status": "placed",
+        "complete": True
+    }
+
+    response = requests.post(f"{BASE_URL}/store/order", json=payload)
+    assert response.status_code == 200
+    return response.json()
