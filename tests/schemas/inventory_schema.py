@@ -4,13 +4,10 @@ INVENTORY_SCHEMA = {
         "approved": {
             "type": "integer"
         },
-        "placed": {
-            "type": "integer"
-        },
         "delivered": {
             "type": "integer"
         },
     },
-    "required": ["approved", "delivered", "placed"],
+    "required": ["approved", "delivered"],
     "additionalProperties": False
 }
