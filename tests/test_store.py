@@ -3,6 +3,7 @@ import pytest
 import requests
 import jsonschema
 from schemas.store_schema import STORE_SCHEMA
+from schemas.inventory_schema import INVENTORY_SCHEMA
 
 BASE_URL = "http://5.181.109.28:9090/api/v3"
 
@@ -28,6 +29,7 @@ class TestStore:
             response_clean_data = response_json['shipDate'][:23]
 
         with allure.step("Проверка статуса ответа и валидация JSON-схемы"):
+            assert response.status_code == 200, "Код ответа не совпал с ожидаемым"
             jsonschema.validate(response_json, STORE_SCHEMA)
 
         with allure.step("Проверка параметров ответа"):
@@ -81,18 +83,12 @@ class TestStore:
             assert response.text == "Order not found"
 
     @allure.title("Получение инвентаря магазина - test 46")
-    # @pytest.mark.parametrize(
-    #     "status, expected_status_code",
-    #     [
-    #         ("approved", 200),
-    #         ("delivered", 200),
-    #     ]
-    # )
     def test_get_inventory(self):
-        with allure.step(f"Отправка запроса на получение инвентаря магазина по status"):
+        with allure.step(f"Отправка запроса на получение инвентаря магазина"):
             response = requests.get(url=f"{BASE_URL}/store/inventory")
+            response_json = response.json()
 
         with allure.step("Проверка статуса ответа и формата данных"):
-            # assert response.status_code == expected_status_code
-            # assert isinstance(response.json(), list)
-            print(response)
+            assert response.status_code == 200, "Код ответа не совпал с ожидаемым"
+            jsonschema.validate(response_json, INVENTORY_SCHEMA)
+
